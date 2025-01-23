@@ -57,7 +57,7 @@ func exitGame()
 func showOptions()
 {
     print("""
-    Select an option
+    \nSelect an option
     0 - Rock
     1 - Paper
     2 - Scissors
@@ -68,19 +68,19 @@ func showOptions()
 
 func takeChoice() -> Int
 {
-    let input = readLine()
-    var choice = 4
     
-    if input != nil
+    guard let input = readLine() else
     {
-        choice = Int(input!) ?? 4
+        return 4
     }
-        else
+    
+    guard let choice = Int(input) else
     {
-        return choice
+        return 4
     }
     
     return choice
+    
     
 }
 
@@ -92,7 +92,7 @@ func optionEvaluation(option: GameOptions)
     case .exit:
         exitGame()
     case .invalid:
-        print("That's not a valid option")
+        print("That's not a valid option\n")
         //showOptions()
         //takeChoice()
     default:
@@ -107,25 +107,25 @@ func determineWinner(playerChoice: GameOptions, aiChoice:GameOptions)
     switch (playerChoice, aiChoice)
     {
     case (.rock, .rock):
-        print("Empate! Ambos eligieron Rock\n")
+        print("\nEmpate! Ambos eligieron Rock\n")
     case (.rock, .paper):
-        print("Perdiste, Rock pierde contra Paper\n")
+        print("\nPerdiste, Rock pierde contra Paper\n")
     case (.rock, .scissors):
-        print("Ganaste! Rock vence a Scissors\n")
+        print("\nGanaste! Rock vence a Scissors\n")
     case (.paper, .rock):
-        print("Ganaste! Paper vence a Rock\n")
+        print("\nGanaste! Paper vence a Rock\n")
     case (.paper, .paper):
-        print("Empate! Ambos eligieron Paper\n")
+        print("\nEmpate! Ambos eligieron Paper\n")
     case (.paper, .scissors):
-        print("Perdiste, Paper pierde contra Scissors\n")
+        print("\nPerdiste, Paper pierde contra Scissors\n")
     case (.scissors, .rock):
-        print("Perdiste, Scissors pierde contra Rock\n")
+        print("\nPerdiste, Scissors pierde contra Rock\n")
     case (.scissors, .paper):
-        print("Ganaste! Scissors vence a Paper\n")
+        print("\nGanaste! Scissors vence a Paper\n")
     case (.scissors, .scissors):
-        print("Empate! Ambos eligieron Scissors\n")
+        print("\nEmpate! Ambos eligieron Scissors\n")
     default:
-        print("Algo ha salido mal, lo sentimos :(")
+        print("\nAlgo ha salido mal, lo sentimos :(")
     }
 }
 
