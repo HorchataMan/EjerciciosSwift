@@ -104,42 +104,28 @@ func optionEvaluation(option: GameOptions)
 
 func determineWinner(playerChoice: GameOptions, aiChoice:GameOptions)
 {
-    if playerChoice == aiChoice
+    switch (playerChoice, aiChoice)
     {
-         print("Empate, ambos eligieron lo mismo\n")
-    }
-    else if playerChoice == .rock
-    {
-        if aiChoice == .paper
-        {
-            print("Perdiste! Paper vence a Rock\n")
-        }
-        else if aiChoice == .scissors
-        {
-            print("Ganaste! Rock vence a Scissors\n")
-        }
-    }
-    else if playerChoice == .paper
-    {
-        if aiChoice == .scissors
-        {
-            print("Perdiste! Scissors vence a Paper\n")
-        }
-        else if aiChoice == .rock
-        {
-            print("Ganaste! Paper vence a Rock\n")
-        }
-    }
-    else if playerChoice == .scissors
-    {
-        if aiChoice == .rock
-        {
-            print("Perdiste! Rock vence a Scissors\n")
-        }
-        else if aiChoice == .paper
-        {
-            print("Ganaste! Scissors vence a Paper\n")
-        }
+    case (.rock, .rock):
+        print("Empate! Ambos eligieron Rock\n")
+    case (.rock, .paper):
+        print("Perdiste, Rock pierde contra Paper\n")
+    case (.rock, .scissors):
+        print("Ganaste! Rock vence a Scissors\n")
+    case (.paper, .rock):
+        print("Ganaste! Paper vence a Rock\n")
+    case (.paper, .paper):
+        print("Empate! Ambos eligieron Paper\n")
+    case (.paper, .scissors):
+        print("Perdiste, Paper pierde contra Scissors\n")
+    case (.scissors, .rock):
+        print("Perdiste, Scissors pierde contra Rock\n")
+    case (.scissors, .paper):
+        print("Ganaste! Scissors vence a Paper\n")
+    case (.scissors, .scissors):
+        print("Empate! Ambos eligieron Scissors\n")
+    default:
+        print("Algo ha salido mal, lo sentimos :(")
     }
 }
 
