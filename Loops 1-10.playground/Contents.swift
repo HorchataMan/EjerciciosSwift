@@ -360,13 +360,24 @@ func contains(hayStack: String, needle: String) -> Bool
         return false
     }
     
+    
+    
     for (index, char) in hayStack.enumerated()
     {
+        if (hayStack.count - index) < needle.count{
+            break
+        }
+        
         if char == needle.first
         {
             var count = 1
             for letter in hayStack[hayStack.index(hayStack.startIndex, offsetBy: index+1)..<hayStack.endIndex]
             {
+                
+                if (hayStack.count - index) < needle.count{
+                    break
+                }
+                
                 if letter == needle[needle.index(needle.startIndex, offsetBy: count)]
                 {
                     count += 1
@@ -380,6 +391,7 @@ func contains(hayStack: String, needle: String) -> Bool
                 if count == needle.count
                 {
                     hasFound = true
+                    break
                 }
             }
         }
@@ -397,6 +409,23 @@ print(resultado2) // false
 
 let resultado3 = contains(hayStack: "Hola mundo", needle: "")
 print(resultado3) // true
+
+let resultado4 = contains(hayStack: "Hello, world", needle: "world")
+print(resultado4) // true
+
+let resultado5 = contains(hayStack: "Café au lait", needle: "Café")
+print(resultado5) // true
+
+let resultado6 = contains(hayStack: "Café au lait", needle: "coffee")
+print(resultado6) // false
+
+let resultado7 = contains(hayStack: "aaaaaaa", needle: "aaa")
+print(resultado7) // true
+
+let resultado8 = contains(hayStack: "aaaaaaa", needle: "aaaaaaab")
+print(resultado8) // false
+
+
 
 // MARK: - Exercise 8: find
 /// Encuentra la posición inicial de una subcadena (*needle*) dentro de una cadena (*hayStack*): find
@@ -427,7 +456,63 @@ print(resultado3) // true
 /// let resultado3 = find(hayStack: "Hola mundo", needle: "")
 /// print(resultado3) // NSNotFound
 /// ```
+func find(hayStack: String, needle: String) -> Int{
+    
+    guard contains(hayStack: hayStack, needle: needle) && needle != "" else{
+        return NSNotFound
+    }
+    
+    let index = hayStack.range(of: needle)
+    
+    var foundIndex: Int = 0
+    
+    
+    for (index, char) in hayStack.enumerated()
+    {
+        if (hayStack.count - index) < needle.count{
+            break
+        }
+        
+        if char == needle.first
+        {
+            foundIndex = index
+            var count = 1
+            for letter in hayStack[hayStack.index(hayStack.startIndex, offsetBy: index+1)..<hayStack.endIndex]
+            {
+                
+                if (hayStack.count - index) < needle.count{
+                    break
+                }
+                
+                if letter == needle[needle.index(needle.startIndex, offsetBy: count)]
+                {
+                    count += 1
+                }
+                else
+                {
+                    count = 1
+                    break
+                }
+                
+                if count == needle.count
+                {
+                    
+                    break
+                }
+            }
+        }
+    }
+        
+    return foundIndex
+}
+    
 
+let resultado21 = find(hayStack: "Hola mundo", needle: "mundo")
+print(resultado21) // 5
+let resultado22 = find(hayStack: "Hola mundo", needle: "Swift")
+print(resultado22) // NSNotFound
+let resultado23 = find(hayStack: "Hola mundo", needle: "")
+print(resultado23) // NSNotFound
 
 
 // MARK: - Exercise 10: containsOccurrences
