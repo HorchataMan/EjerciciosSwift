@@ -1,8 +1,8 @@
 //
-//  SongsLoader.swift
-//  Sprint1
+//  SongLoader.swift
+//  SpotiClone
 //
-//  Created by Ismael Sabri Pérez on 16/1/25.
+//  Created by Jan Petrina on 02/02/2025.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ class SongsLoader {
     init() {
         // Inicializamos las variables (para eso está el init)
         self.songs = []
-        self.logger = Logger(subsystem: "Sprint1", category: "SongsLoader")
+        self.logger = Logger(subsystem: "SpotiClone", category: "SongsLoader")
         
         // Cargamos las canciones del JSON y tratamos el error imprimiéndolo por pantalla
         guard let loadedSongs = loadSongs() else {
@@ -32,14 +32,14 @@ class SongsLoader {
     
     // MARK: Functions
     private func loadSongs() -> [Song]? {
-        guard let filePath = Bundle.main.path(forResource: "songs", ofType: "json", inDirectory: "Datasource/songs") else {
+        guard let filePath = Bundle.main.url(forResource: "songs", withExtension: "json") else {
             print("Error: No se encontró el archivo songs.json en el bundle.")
             return nil
         }
-        let url = URL(fileURLWithPath: filePath)
+        let url = filePath
         
         guard FileManager.default.fileExists(atPath: url.path) else {
-            print("Error: No se encontró el archivo songs.json en la ruta.")
+            print("Error: No se encontró el archivo songs.json \(url) en la ruta.")
             return nil
         }
         

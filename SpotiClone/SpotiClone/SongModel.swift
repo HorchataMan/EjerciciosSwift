@@ -1,8 +1,8 @@
 //
-//  Songs.swift
-//  Sprint1
+//  SongModel.swift
+//  SpotiClone
 //
-//  Created by Ismael Sabri Pérez on 16/1/25.
+//  Created by Jan Petrina on 02/02/2025.
 //
 
 import Foundation

@@ -100,6 +100,7 @@ struct Playlist {
         songList = newSongList
     }
     
+    ///Gets the song release date as a Date type so it can be compared and ordered by
     private func getSongReleaseDate(_ song: Song) -> Date {
         
         let dateFormatter = DateFormatter()

@@ -2,8 +2,16 @@
 
 import Foundation
 
-let allSongs: [Song] = SongsLoader().songs
+
+let allSongs = SongsLoader().songs
 
 func main(){
     
+    //let algoritmo = Algorithm()
+    
+
+
+    //print(allSongs1[0].basicInfo.title)
 }
+
+main()

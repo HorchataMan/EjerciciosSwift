@@ -167,7 +167,7 @@ func sumWithCompress(sequence: [Int]) -> Int {
         return 0
     }
     
-    return sumAll(sequence)
+    return compress(sequence: sequence, initialValue: 0, combinationOperation: +)
 }
 
 
@@ -195,7 +195,7 @@ func multiplyWithCompress(sequence: [Int]) -> Int {
         return 0
     }
     
-    return multiplyAll(sequence)
+    return compress(sequence: sequence, initialValue: 1, combinationOperation: *)
 }
 
 // MARK: Exercise 6: sumEvenWithCompress
@@ -557,6 +557,13 @@ func sumAllEvensAndOddsWithCompress(_ sequence: [Int]) -> (evens: Int, odds: Int
     return (evens, odds)
 }
 
+func sumAllEvensAndOddsWithCompress2(sequence: [Int]) -> (evens: Int, odds:Int){
+    return (evens: compress(sequence: sequence, initialValue: 0, combinationOperation: {result, number in
+        if number % 2 == 0 { return result + number } else {return result}
+    }), odds: compress(sequence: sequence, initialValue: 0, combinationOperation: {result, number in
+        if number % 2 != 0 { return result + number } else {return result}
+    }))
+}
 
 // MARK: - Exercise 14: compress without initial value
 /// Modificación de la función compress sin valor inicial que combina los elementos de un array de enteros usando una operación específica
