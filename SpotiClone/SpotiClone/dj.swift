@@ -148,8 +148,11 @@ struct Algorithm {
         var similarTags: Int = 0
         
         for tag in tags {
-            similarTags = song.metadata.tags.reduce(0) {
-                $1 == tag ? 1 : 0 //Intente hacerlo con closure en lugar de contains, pero no lo pude testear
+//            similarTags = song.metadata.tags.reduce(0) {
+//                $1 == tag ? 1 : 0 //Intente hacerlo con closure en lugar de contains, pero no lo pude testear
+//            }
+            if song.metadata.tags.contains(tag) {
+                similarTags += 1
             }
         }
         //Max score should be 30 points
@@ -186,7 +189,7 @@ struct Algorithm {
         
         let popularityDiff = abs((popularityNormalized - song.metadata.popularity))
         
-        let ratio: Double = 1.0 - (Double(popularity)/100.0)
+        let ratio: Double = 1.0 - (Double(popularityDiff)/100.0)
         score = 10.0 * ratio
         
         return score
