@@ -83,6 +83,12 @@ struct Playlist {
         songList.reverse()
     }
     
+    func contains(song: Song) -> Bool {
+        var result = false
+        result = songList.contains(song)
+        return result
+    }
+    
     
     ///Orders the playlist by release date
     mutating func orderByRelease() {
