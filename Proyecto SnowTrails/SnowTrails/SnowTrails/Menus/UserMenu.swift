@@ -6,9 +6,9 @@
 //
 
 class RegularUserMenu: Menu {
-    let signedInUser: User
+    let signedInUser: User?
     
-    init(signedInUser: User) {
+    init(signedInUser: User?) {
         self.signedInUser = signedInUser
     }
     

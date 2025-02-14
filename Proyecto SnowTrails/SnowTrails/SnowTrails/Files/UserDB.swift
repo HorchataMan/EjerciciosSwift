@@ -13,4 +13,9 @@ struct UsersDB {
         "adminuser@keepcoding.es": User(name: "Adminuserkeepcoding1", email: "adminuser@keepcoding.es", password: "Adminuser1", isAdmin: true),
         "regularuser@keepcoding.es": User(name: "Regularuserkeepcoding1", email: "regularuser@keepcoding.es", password: "Regularuser1", isAdmin: false)
     ]
+    
+    mutating func addRegularUser(email: String, name: String, password: String) {
+        let userToAdd = User(name: name, email: email, password: password, isAdmin: false)
+        users[email] = userToAdd
+    }
 }

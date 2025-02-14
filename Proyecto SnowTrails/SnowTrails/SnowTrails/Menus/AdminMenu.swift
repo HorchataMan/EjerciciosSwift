@@ -6,7 +6,8 @@
 //
 
 class AdminMenu: Menu {
-    let signedInUser: User
+    var signedInUser: User?
+    
     
     enum AdminOptions: Int {
         case seeAllUsers = 1
@@ -17,7 +18,7 @@ class AdminMenu: Menu {
         case invalid = 6
     }
     
-    init(signedInUser: User) {
+    init(signedInUser: User?) {
         self.signedInUser = signedInUser
     }
     
@@ -72,18 +73,21 @@ class AdminMenu: Menu {
             addUser()
             runMenu()
         case .deleteUser:
-            print()
+            deleteUser(onSuccess: {}, onFailure: {})
+            runMenu()
         case .addRoutePoint:
-            print()
+            print("This feature is not implemented yet")
+            runMenu()
         case .logOut:
-            print()
+            logOut()
         case .invalid:
-            print()
+            print("That's not a valid choice")
+            runMenu()
         }
     }
     
     func printAllUsers(){
-        for registeredUser in UsersDB().users {
+        for registeredUser in userDatabase.users {
             print("- \(registeredUser.value.isAdmin ? "Admin:": "Regular User:") \(registeredUser.value.name) --- Email: \(registeredUser.value.email)")
         }
         print("===============\n")
@@ -91,12 +95,18 @@ class AdminMenu: Menu {
     
     func addUser() {
         let emailToAdd = registerEmail(onFailure: runMenu)
-        print("Added email: \(emailToAdd)")
+        print("\nEmail: \(emailToAdd)")
+        let nameToAdd = registerName(onFailure: runMenu)
+        print("\nName: \(nameToAdd)")
+        let passwordToAdd = registerPassword(onFailure: runMenu)
+        
+        userDatabase.addRegularUser(email: emailToAdd, name: nameToAdd, password: passwordToAdd)
+        print("\nRegisterd user: \(nameToAdd) (\(emailToAdd)")
     }
     
     func registerEmail(onFailure: () -> Void) -> String {
         var email: String = "cholodark69@hotmail.com"
-        print("\nIntroduce el correo que deseas registrar")
+        print("\nInput an e-mail address:")
         do {
             email = try handleUserInput()
             if try validateEmail(email: email) {
@@ -119,12 +129,92 @@ class AdminMenu: Menu {
     func validateEmail(email: String) throws -> Bool {
         var isValid = false
         
-        if UsersDB().users.keys.contains(email) {
+        if userDatabase.users.keys.contains(email) {
             isValid = false
             throw AccountErrors.usedEmail
         } else {
             isValid = true
         }
         return isValid
+    }
+    
+    func registerPassword(onFailure: () -> Void) -> String {
+        var password: String = ""
+        print("\nInput a password:")
+        do {
+            password = try handleUserInput()
+            if validatePassword(password: password) {
+                return password
+            }
+            else {
+                onFailure()
+            }
+        } catch AccountErrors.shortPassword{
+            print("\nPassword must be at least 8 characters long\n")
+            onFailure()
+        } catch {
+            print("Invalid input")
+            onFailure()
+        }
+        
+        return password
+    }
+    
+    func validatePassword(password: String) -> Bool {
+        //Luego hago que si cheque cosas, por ahora solo para tener la funcion
+        let isValid = true
+        return isValid
+    }
+    
+    func registerName(onFailure: () -> Void) -> String {
+        var name: String = ""
+        print("\nInput the name:")
+        do {
+            name = try handleUserInput()
+            
+            return name
+            
+            
+            
+        } catch {
+            print("Invalid input")
+            onFailure()
+        }
+        
+        return name
+    }
+    
+    func checkUserToDelete(userEmail: String) throws {
+        guard let userCheck = userDatabase.users[userEmail] else {
+            //print("No user with that email exists")
+            throw AccountErrors.nonExistentUser
+        }
+        
+        userDatabase.users[userEmail] = nil
+        print("User \(userCheck.name) with e-mail: \(userCheck.email) removed successfully")
+    }
+    
+    func deleteUser(onSuccess: () -> Void, onFailure: () -> Void){
+        do {
+            print("\nEnter the e-mail of the user you wish to remove:\n")
+            let input = try handleUserInput()
+            
+            try checkUserToDelete(userEmail: input)
+            
+            onSuccess()
+            
+        } catch AccountErrors.nonExistentUser {
+            print("\nNo user with that e-mail exists")
+            onFailure()
+        } catch {
+            print("Invalid input")
+            onFailure()
+        }
+    }
+    
+    func logOut() {
+        self.signedInUser = nil
+        print("\nLogged Out, returning to login screen\n")
+        LoginPage().runLoginMenu()
     }
 }

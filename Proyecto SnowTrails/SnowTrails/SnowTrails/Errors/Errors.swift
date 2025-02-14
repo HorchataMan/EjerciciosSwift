@@ -18,4 +18,6 @@ enum InputErrors: Error {
 enum AccountErrors: Error {
     case usedEmail
     case invalidEmail
+    case shortPassword
+    case nonExistentUser
 }

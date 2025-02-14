@@ -8,6 +8,7 @@ import Foundation
 
 
 class Menu {
+    var userDatabase = UsersDB()
     
     func handleUserInput() throws -> String {
         guard let input = readLine() else {
