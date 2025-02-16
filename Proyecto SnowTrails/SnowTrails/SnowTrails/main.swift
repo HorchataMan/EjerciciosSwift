@@ -2,9 +2,8 @@
 import Foundation
 
 func main() {
-    let mainMenu = LoginPage()
-    mainMenu.runLoginMenu()
-    
+    let app = App()
+    app.run()
 }
 
 
